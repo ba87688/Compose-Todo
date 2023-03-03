@@ -2,5 +2,6 @@ package com.example.composetodo.navigation
 
 sealed class Screens (val route:String){
     object HomeScreen: Screens("HomePage")
-    object ToDoListScreen: Screens("ToDoList")
+    object ToDoListAddScreen: Screens("ToDoListAdd")
+    object ToDoListDetail: Screens("ToDoListDetail")
 }

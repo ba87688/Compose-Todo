@@ -2,7 +2,6 @@ package com.example.composetodo.screens
 
 import android.annotation.SuppressLint
 import android.util.Log
-import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -31,7 +30,7 @@ fun Scaf(i: NavHostController){
         floatingActionButton = { FloatingActionButton(onClick = {
             Log.i("TAG", "Scaf: coming soon!")
 
-            i.navigate(Screens.ToDoListScreen.route)
+            i.navigate(Screens.ToDoListAddScreen.route)
 
         }) {
             Text(text = "+")
