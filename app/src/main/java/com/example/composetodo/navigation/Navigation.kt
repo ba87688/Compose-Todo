@@ -12,7 +12,7 @@ fun Navigate(navController: NavHostController){
 
     NavHost(navController = navController, startDestination = Screens.HomeScreen.route ) {
         composable(route = Screens.HomeScreen.route) {
-            HomeScreen()
+            HomeScreen(navController)
 
         }
         composable(route = Screens.ToDoListScreen.route) {
