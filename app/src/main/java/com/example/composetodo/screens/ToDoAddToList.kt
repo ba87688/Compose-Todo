@@ -24,12 +24,16 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.composetodo.Greeting
 import com.example.composetodo.R
+import com.example.composetodo.navigation.Screens
 import com.example.composetodo.ui.theme.ComposeToDoTheme
 
 @Composable
-fun ToDoAddToList() {
+fun ToDoAddToList(navController: NavHostController) {
     Column (
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -38,7 +42,7 @@ fun ToDoAddToList() {
         val offset = Offset(5.0f, 10.0f)
 
         Text(
-            text = "Add an item!",
+            text = "nameOf",
             style = TextStyle(
                 color = Color.DarkGray,
                 fontSize = 24.sp,
@@ -47,12 +51,26 @@ fun ToDoAddToList() {
                 )
             )
         )
-        TextFieldWithOutline()
+        var text by remember {
+            mutableStateOf(TextFieldValue(""))
+        }
+        OutlinedTextField(
+            value = text,
+            modifier = Modifier.padding(bottom = 20.dp),
+            onValueChange = {
+                text = it
+            },
+            label = { Text(text = "Label is...")}
+        )
         TextFieldWithOutline()
         Text(text = "priority...")
         MyUI()
 
-        Button(onClick = {}, modifier = Modifier.padding(8.dp)) {
+        Button(
+            onClick = {
+
+                      navController.navigate(Screens.HomeScreen.route)
+        }, modifier = Modifier.padding(8.dp)) {
             Row {
                 Icon(
                     imageVector = Icons.Default.Add,
@@ -117,5 +135,5 @@ fun MyUI() {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    ToDoAddToList()
+
 }

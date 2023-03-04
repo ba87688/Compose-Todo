@@ -18,7 +18,7 @@ fun Navigate(navController: NavHostController){
         }
 
         composable(route = Screens.ToDoListAddScreen.route) {
-            ToDoAddToList()
+            ToDoAddToList(navController)
 
 
         }
