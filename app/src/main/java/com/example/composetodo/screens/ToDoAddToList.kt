@@ -69,7 +69,7 @@ fun ToDoAddToList(navController: NavHostController) {
         Button(
             onClick = {
 
-                      navController.navigate(Screens.ToDoListDetail.passString(text.text.toString()))
+                      navController.navigate(Screens.ToDoListDetail.passString("ji","xin"))
         }, modifier = Modifier.padding(8.dp)) {
             Row {
                 Icon(

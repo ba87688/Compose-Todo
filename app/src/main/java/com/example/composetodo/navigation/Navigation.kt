@@ -31,9 +31,13 @@ fun Navigate(navController: NavHostController){
         composable(route = Screens.ToDoListDetail.route
         , arguments = listOf(navArgument(TODOLIST_ARGUMENT_KEY){
             type= NavType.StringType
-            })
+            },
+                navArgument(TODOLIST_ARGUMENT_KEY2){
+                    type= NavType.StringType
+                })
         ) {
             Log.d("NEVER", "Navigate: ${it.arguments?.getString(TODOLIST_ARGUMENT_KEY)}")
+            Log.d("NEVER", "Navigate: ${it.arguments?.getString(TODOLIST_ARGUMENT_KEY2)}")
             ToDoDetail()
 
         }
