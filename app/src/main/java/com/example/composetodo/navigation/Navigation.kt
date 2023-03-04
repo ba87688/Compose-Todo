@@ -1,12 +1,18 @@
 package com.example.composetodo.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import com.example.composetodo.models.ToDoItem
+import com.example.composetodo.models.ToDoItemArgType
 import com.example.composetodo.screens.HomeScreen
 import com.example.composetodo.screens.ToDoAddToList
 import com.example.composetodo.screens.ToDoDetail
+import com.google.gson.Gson
 
 @Composable
 fun Navigate(navController: NavHostController){
@@ -22,10 +28,16 @@ fun Navigate(navController: NavHostController){
 
 
         }
-        composable(route = Screens.ToDoListDetail.route) {
+        composable(route = Screens.ToDoListDetail.route
+        , arguments = listOf(navArgument(TODOLIST_ARGUMENT_KEY){
+            type= NavType.StringType
+            })
+        ) {
+            Log.d("NEVER", "Navigate: ${it.arguments?.getString(TODOLIST_ARGUMENT_KEY)}")
             ToDoDetail()
 
         }
+
 
     }
 }
