@@ -4,12 +4,16 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.composetodo.models.ToDoItem
 import com.example.composetodo.navigation.Screens
+import com.example.composetodo.network.database.ToDoListDatabase
 import com.example.composetodo.screens.screenelements.ToDoCard
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(i:NavHostController){
@@ -22,7 +26,8 @@ fun HomeScreen(i:NavHostController){
 @Composable
 fun Scaf(i: NavHostController){
     val navController = rememberNavController()
-
+    val r = LocalContext.current
+    val composableScope = rememberCoroutineScope()
     Scaffold(
         topBar = { TopAppBar(title = {Text("Things To Do...")},backgroundColor = Color.White)  },
         floatingActionButtonPosition = FabPosition.Center,
@@ -30,7 +35,21 @@ fun Scaf(i: NavHostController){
         floatingActionButton = { FloatingActionButton(onClick = {
             Log.i("TAG", "Scaf: coming soon!")
 
-            i.navigate(Screens.ToDoListAddScreen.route)
+
+
+            var db = ToDoListDatabase.getDatabase(r)
+            var dao = db.toDoListDao()
+            composableScope.launch {
+                dao.insert(ToDoItem(false,"Kevin","Sorbo"))
+
+                Log.d("INSIDE", "Scaf: success? ")
+            }
+
+
+
+
+
+//            i.navigate(Screens.ToDoListAddScreen.route)
 
         }) {
             Text(text = "+")
