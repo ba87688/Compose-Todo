@@ -23,7 +23,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposeToDoTheme {
                 var i = rememberNavController()
-
                 Navigate(navController = i )
             }
         }

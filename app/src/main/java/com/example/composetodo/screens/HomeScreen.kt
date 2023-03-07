@@ -7,16 +7,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.composetodo.models.ToDoItem
 import com.example.composetodo.navigation.Screens
 import com.example.composetodo.network.database.ToDoListDatabase
 import com.example.composetodo.screens.screenelements.ToDoCard
+import com.example.composetodo.viewmodels.ToDoListViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeScreen(i:NavHostController){
+fun HomeScreen(
+    i:NavHostController,
+    gameViewModel: ToDoListViewModel = viewModel()
+
+    ){
 
 
     Scaf(i)
