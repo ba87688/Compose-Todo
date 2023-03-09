@@ -23,7 +23,9 @@ fun HomeScreen(
     gameViewModel: ToDoListViewModel = viewModel()
 
     ){
+//    val f = gameViewModel.getAllList()
 
+    Log.d("TAG", "HomeScreen: SHIT ")
 
     Scaf(i)
 }

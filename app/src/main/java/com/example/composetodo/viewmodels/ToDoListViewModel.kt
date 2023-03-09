@@ -4,6 +4,10 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
+import androidx.room.Insert
+import com.example.composetodo.models.ToDoItem
+import com.example.composetodo.network.database.ToDoListDao
+import javax.inject.Inject
 
 class ToDoListViewModel (
     application: Application
@@ -15,5 +19,10 @@ class ToDoListViewModel (
 
     }
 
+
+//
+//    fun getAllList():List<ToDoItem>{
+//        return dao.getAllToDoItemsList()
+//    }
 
 }
