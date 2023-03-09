@@ -7,12 +7,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.composetodo.models.ToDoItem
-import com.example.composetodo.models.ToDoItemArgType
 import com.example.composetodo.screens.HomeScreen
 import com.example.composetodo.screens.ToDoAddToList
 import com.example.composetodo.screens.ToDoDetail
-import com.google.gson.Gson
 
 @Composable
 fun Navigate(navController: NavHostController){
