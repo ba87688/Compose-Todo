@@ -24,16 +24,21 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.composetodo.Greeting
 import com.example.composetodo.R
+import com.example.composetodo.models.ToDoItem
 import com.example.composetodo.navigation.Screens
 import com.example.composetodo.ui.theme.ComposeToDoTheme
+import com.example.composetodo.viewmodels.MainViewModel
 
 @Composable
 fun ToDoAddToList(navController: NavHostController) {
+    val mainViewModel = hiltViewModel<MainViewModel>()
+
     Column (
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -68,8 +73,10 @@ fun ToDoAddToList(navController: NavHostController) {
 
         Button(
             onClick = {
+                val toDoItem = ToDoItem(false,"Evan","Maroge")
+                mainViewModel.addToDoItem(toDoItem)
 
-                      navController.navigate(Screens.ToDoListDetail.passString("ji","xin"))
+                navController.navigate(Screens.ToDoListDetail.passString("ji","xin"))
         }, modifier = Modifier.padding(8.dp)) {
             Row {
                 Icon(

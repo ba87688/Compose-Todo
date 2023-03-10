@@ -24,9 +24,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor( application: Application,val repository: ToDoListRepository ) : ViewModel() {
-
+    private val _electionFollowed = MutableLiveData<List<ToDoItem>>()
+    val electionFollowed: LiveData<List<ToDoItem>> = _electionFollowed
     init {
         Log.d("TAG", ": View model is working! ")
+
+
 
 
 
@@ -39,6 +42,24 @@ class MainViewModel @Inject constructor( application: Application,val repository
 
             }
         }
+    }
+
+
+    val currentToDoList = repository.getToDoListItemsFromDB().asLiveData()
+
+    fun addToDoItem(item: ToDoItem){
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                repository.dao.insert(item)
+
+            }
+        }
+
+    }
+
+
+    fun setButtonStatus(status:List<ToDoItem>){
+        _electionFollowed.postValue(status)
     }
 //
 //    fun getAllList():List<ToDoItem>{

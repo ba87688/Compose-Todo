@@ -19,17 +19,10 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @Inject
-    lateinit var dao: ToDoListDao
-
-    @Inject
-    lateinit var repository: ToDoListRepository
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var rep = ToDoListRepository(dao)
 //        var factoryModel = ToDoListViewModelFactory(this.application,null, rep,this)
 
 
