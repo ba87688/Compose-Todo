@@ -12,6 +12,7 @@ import com.example.composetodo.navigation.Navigate
 import com.example.composetodo.network.database.ToDoListDao
 import com.example.composetodo.repository.ToDoListRepository
 import com.example.composetodo.ui.theme.ComposeToDoTheme
+import com.example.composetodo.viewmodels.MainViewModel
 //import com.example.composetodo.viewmodels.ToDoListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -23,6 +24,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 //        var factoryModel = ToDoListViewModelFactory(this.application,null, rep,this)
 
 
@@ -39,9 +41,10 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             ComposeToDoTheme {
+                val mainViewModel = hiltViewModel<MainViewModel>()
 
                 var i = rememberNavController()
-                Navigate(navController = i)
+                Navigate(navController = i, mainViewModel)
 //                Navigate(navController = i,factoryModel)
             }
         }

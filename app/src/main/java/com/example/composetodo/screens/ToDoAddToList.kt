@@ -1,43 +1,31 @@
 package com.example.composetodo.screens
 
-import android.graphics.drawable.Drawable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.outlined.AccountBox
-import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.SemanticsProperties.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.example.composetodo.Greeting
-import com.example.composetodo.R
 import com.example.composetodo.models.ToDoItem
 import com.example.composetodo.navigation.Screens
-import com.example.composetodo.ui.theme.ComposeToDoTheme
 import com.example.composetodo.viewmodels.MainViewModel
 
 @Composable
-fun ToDoAddToList(navController: NavHostController) {
-    val mainViewModel = hiltViewModel<MainViewModel>()
+fun ToDoAddToList(navController: NavHostController,
+                  mainViewModel: MainViewModel) {
 
     Column (
         modifier = Modifier.fillMaxSize(),
@@ -56,27 +44,47 @@ fun ToDoAddToList(navController: NavHostController) {
                 )
             )
         )
-        var text by remember {
+        var nameText by remember {
             mutableStateOf(TextFieldValue(""))
         }
+
+        //name field
         OutlinedTextField(
-            value = text,
+            value = nameText,
             modifier = Modifier.padding(bottom = 20.dp),
             onValueChange = {
-                text = it
+                nameText = it
             },
             label = { Text(text = "Label is...")}
         )
-        TextFieldWithOutline()
+
+        var descriptionText by remember {
+            mutableStateOf(TextFieldValue(""))
+        }
+        OutlinedTextField(
+            value = descriptionText,
+            modifier = Modifier.padding(bottom = 20.dp),
+            onValueChange = {
+                descriptionText = it
+            },
+            label = { Text(text = "Label is...")}
+        )
         Text(text = "priority...")
-        MyUI()
+
+
+
+//        MyUI(radioOptions,selectedItem)
 
         Button(
             onClick = {
-                val toDoItem = ToDoItem(false,"Evan","Maroge")
+                val name = nameText.text
+                val describeTask = descriptionText.text
+
+
+                val toDoItem = ToDoItem(false,name,describeTask)
                 mainViewModel.addToDoItem(toDoItem)
 
-                navController.navigate(Screens.ToDoListDetail.passString("ji","xin"))
+                navController.navigate(Screens.HomeScreen.route)
         }, modifier = Modifier.padding(8.dp)) {
             Row {
                 Icon(
@@ -109,23 +117,23 @@ fun TextFieldWithOutline(
 
 @Composable
 fun MyUI() {
+//
     val radioOptions = listOf("High", "Medium", "Low")
 
-    var selectedItem by remember {
+    val selectedItem by remember {
         mutableStateOf(radioOptions[0])
     }
-
     Row(modifier = Modifier.selectableGroup()) {
 
         radioOptions.forEach { label ->
             Row(
                 modifier = Modifier
                     .height(56.dp)
-                    .selectable(
-                        selected = (selectedItem == label),
-                        onClick = { selectedItem = label },
-                        role = androidx.compose.ui.semantics.Role.RadioButton
-                    )
+//                    .selectable(
+//                        selected = (selectedItem == label)
+//                        onClick = { selectedItem = label },
+//                        role = androidx.compose.ui.semantics.Role.RadioButton
+//                    )
                     .padding(horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -134,7 +142,15 @@ fun MyUI() {
                     selected = (selectedItem == label),
                     onClick = null // null recommended for accessibility with screen readers
                 )
-                Text(text = label)
+                var color:Color
+                when(label){
+                    "High" -> color = Color.Red
+                    "Medium" -> color = Color.Blue
+                    else -> color =Color.Green
+
+                }
+                Text(text = label, color = color)
+
             }
         }
     }

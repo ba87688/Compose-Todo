@@ -2,6 +2,9 @@ package com.example.composetodo.viewmodels
 
 import android.app.Application
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.*
 import androidx.room.Insert
 import com.example.composetodo.models.ToDoItem
@@ -26,11 +29,16 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor( application: Application,val repository: ToDoListRepository ) : ViewModel() {
     private val _electionFollowed = MutableLiveData<List<ToDoItem>>()
     val electionFollowed: LiveData<List<ToDoItem>> = _electionFollowed
+
+
+    var currentItemIndex by mutableStateOf<Int?>(null)
+        private set
+
+    fun setCurrentItemIndex(index:Int){
+        currentItemIndex = index
+    }
     init {
         Log.d("TAG", ": View model is working! ")
-
-
-
 
 
 
@@ -61,7 +69,8 @@ class MainViewModel @Inject constructor( application: Application,val repository
     fun setButtonStatus(status:List<ToDoItem>){
         _electionFollowed.postValue(status)
     }
-//
+
+
 //    fun getAllList():List<ToDoItem>{
 //        return dao.getAllToDoItemsList()
 //    }

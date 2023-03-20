@@ -29,11 +29,11 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
-    i: NavHostController
+    i: NavHostController,
+    mainViewModel: MainViewModel
 
 ){
 //    val homeViewModel: ToDoListViewModel = viewModel(factory = factoryModel)
-    val mainViewModel = hiltViewModel<MainViewModel>()
 
 
     Log.d("TAG", "HomeScreen: SHIT ")
@@ -65,13 +65,6 @@ fun Scaf(i: NavHostController, mainViewModel: MainViewModel){
 
 
 
-
-
-
-
-
-
-
             Log.i("TAG", "Scaf: coming soon!")
 
 
@@ -97,8 +90,6 @@ fun Scaf(i: NavHostController, mainViewModel: MainViewModel){
         drawerContent = { Text(text = "drawerContent") },
         content = {
 
-
-
             mainViewModel.currentToDoList.observe(lifecycleOwner, Observer { it ->
                 val data = it.data
                 if(data!=null){
@@ -119,7 +110,7 @@ fun Scaf(i: NavHostController, mainViewModel: MainViewModel){
 
             val lifecycleOwner = LocalLifecycleOwner.current
             if(showWebView) {
-                ToDoCard(list = list )
+                ToDoCard(list = list ,i,mainViewModel)
 
             }
 
