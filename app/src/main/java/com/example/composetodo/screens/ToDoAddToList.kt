@@ -21,6 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.composetodo.models.ToDoItem
 import com.example.composetodo.navigation.Screens
+import com.example.composetodo.screens.screenelements.CustomDialog
 import com.example.composetodo.viewmodels.MainViewModel
 
 @Composable
@@ -32,6 +33,7 @@ fun ToDoAddToList(navController: NavHostController,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
             ){
+
         val offset = Offset(5.0f, 10.0f)
 
         Text(
@@ -84,6 +86,7 @@ fun ToDoAddToList(navController: NavHostController,
                 val toDoItem = ToDoItem(false,name,describeTask)
                 mainViewModel.addToDoItem(toDoItem)
 
+
                 navController.navigate(Screens.HomeScreen.route)
         }, modifier = Modifier.padding(8.dp)) {
             Row {
@@ -96,6 +99,12 @@ fun ToDoAddToList(navController: NavHostController,
             }
         }
     }
+
+
+
+
+
+
 
 }
 
@@ -113,6 +122,13 @@ fun TextFieldWithOutline(
         },
         label = { Text(text = "Label is...")}
     )
+
+
+
+
+
+
+
 }
 
 @Composable
@@ -154,6 +170,18 @@ fun MyUI() {
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
 }
 @Preview(showBackground = true)
 @Composable

@@ -27,7 +27,11 @@ import com.example.composetodo.ui.theme.ComposeToDoTheme
 import com.example.composetodo.viewmodels.MainViewModel
 
 @Composable
-fun ToDoCard(list: List<ToDoItem>, i:NavHostController, mainViewModel: MainViewModel) {
+fun ToDoCard(
+    list: List<ToDoItem>,
+    i:NavHostController,
+    mainViewModel: MainViewModel
+) {
 
     var nav = i
     LazyColumn() {
@@ -41,12 +45,17 @@ fun ToDoCard(list: List<ToDoItem>, i:NavHostController, mainViewModel: MainViewM
                     .clickable {
                         Log.d("TAGNEVER", "ToDoCard: $index")
                         mainViewModel.setCurrentItemIndex(index)
+                        if (mainViewModel.isDialogShown == false) {
+                            Log.d("GANG GANG", "Scaf: it is FLASEEEEEEEE")
+                            mainViewModel.onPurchaseClick()
+                        }
 
 //                        nav.currentBackStackEntry?.savedStateHandle?.set(
 //                            key = "todoitem",
 //                            value = item
 //                        )
-                        nav.navigate(Screens.ToDoListDetail.route)
+//                        nav.navigate(Screens.ToDoListDetail.route)
+
 
 
                     },

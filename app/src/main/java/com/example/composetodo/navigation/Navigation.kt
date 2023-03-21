@@ -3,13 +3,9 @@ package com.example.composetodo.navigation
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
-import com.example.composetodo.models.ToDoItem
 import com.example.composetodo.screens.HomeScreen
 import com.example.composetodo.screens.ToDoAddToList
 import com.example.composetodo.screens.ToDoDetail
@@ -48,17 +44,21 @@ fun Navigate(navController: NavHostController, mainViewModel: MainViewModel){
 //            }
 
 
-            val currentItem = mainViewModel.currentItemIndex
-//            Log.d("NEVER", "Navigate: $currentItem")
+//            val currentItemIndex = mainViewModel.currentItemIndex
+////            Log.d("NEVER", "Navigate: $currentItem")
+//
+//            LaunchedEffect(key1 = currentItemIndex ){
+//                if (currentItemIndex!=null){
+//                    Log.d("NEVER ate", "Navigate: $currentItemIndex")
+//                    val currentItem  = mainViewModel.getCurrentToDoItem(currentItemIndex)
+//                    Log.d("NEVER ate", "Navigate: ${currentItem?.name}")
+//
+//
+//                }
+//            }
 
-            LaunchedEffect(key1 = currentItem ){
-                if (currentItem!=null){
-                    Log.d("NEVER ate", "Navigate: $currentItem")
-                }
-            }
 
-
-            ToDoDetail()
+            ToDoDetail(mainViewModel)
 
         }
 

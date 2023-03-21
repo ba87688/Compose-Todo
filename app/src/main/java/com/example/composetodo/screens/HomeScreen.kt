@@ -22,6 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.composetodo.models.ToDoItem
 import com.example.composetodo.navigation.Screens
 import com.example.composetodo.network.database.ToDoListDatabase
+import com.example.composetodo.screens.screenelements.CustomDialog
 import com.example.composetodo.screens.screenelements.ToDoCard
 import com.example.composetodo.viewmodels.MainViewModel
 //import com.example.composetodo.viewmodels.ToDoListViewModel
@@ -43,7 +44,7 @@ fun HomeScreen(
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun Scaf(i: NavHostController, mainViewModel: MainViewModel){
+fun Scaf(i: NavHostController, mainViewModel: MainViewModel) {
     val navController = rememberNavController()
     val r = LocalContext.current
     val composableScope = rememberCoroutineScope()
@@ -53,19 +54,20 @@ fun Scaf(i: NavHostController, mainViewModel: MainViewModel){
     var list = mutableListOf<ToDoItem>()
 
 
-
     var showWebView by remember { mutableStateOf(false) }
+//    var isDialogShown by remember { mutableStateOf(mainViewModel.getDialogShown()) }
+
+
 
     Scaffold(
-        topBar = { TopAppBar(title = {Text("Things To Do...")},backgroundColor = Color.White)  },
+        topBar = { TopAppBar(title = { Text("Things To Do...") }, backgroundColor = Color.White) },
         floatingActionButtonPosition = FabPosition.Center,
 
-        floatingActionButton = { FloatingActionButton(onClick = {
+        floatingActionButton = {
+            FloatingActionButton(onClick = {
 
 
-
-
-            Log.i("TAG", "Scaf: coming soon!")
+                Log.i("TAG", "Scaf: coming soon!")
 
 
 //
@@ -79,20 +81,24 @@ fun Scaf(i: NavHostController, mainViewModel: MainViewModel){
 
 
 
+//                here is the work
+                if (mainViewModel.isDialogShown == false) {
+                    Log.d("GANG GANG", "Scaf: it is FLASEEEEEEEE")
+                    mainViewModel.onPurchaseClick()
+                }
 
+//                i.navigate(Screens.ToDoListAddScreen.route)
 
-            i.navigate(Screens.ToDoListAddScreen.route)
-
-        }) {
-            Text(text = "+")
-        }
+            }) {
+                Text(text = "+")
+            }
         },
         drawerContent = { Text(text = "drawerContent") },
         content = {
 
             mainViewModel.currentToDoList.observe(lifecycleOwner, Observer { it ->
                 val data = it.data
-                if(data!=null){
+                if (data != null) {
                     Log.d("TAG", "Scaf: LIVE DATA IS NOT NULL ${data.get(0).name}")
 
                     list.clear()
@@ -101,20 +107,35 @@ fun Scaf(i: NavHostController, mainViewModel: MainViewModel){
 
 
                     mainViewModel.setButtonStatus(list)
-                }
-                else{
+                } else {
                     Log.d("TAG", "Scaf: LIVE DATA IS  NULL")
 
                 }
             })
 
             val lifecycleOwner = LocalLifecycleOwner.current
-            if(showWebView) {
-                ToDoCard(list = list ,i,mainViewModel)
+            if (showWebView) {
+                ToDoCard(list = list, i, mainViewModel)
 
             }
 
-        } ,
+        },
 
         )
+
+
+
+    if(mainViewModel.isDialogShown){
+        CustomDialog(
+            onDismiss = {
+                mainViewModel.onDismissDialog()
+            },
+            onConfirm = {
+                //viewmodel.buyItem()
+            },
+            mainViewModel
+        )
+    }
+
+
 }

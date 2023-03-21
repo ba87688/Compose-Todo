@@ -6,36 +6,55 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.*
-import androidx.room.Insert
 import com.example.composetodo.models.ToDoItem
-import com.example.composetodo.network.database.ToDoListDao
 import com.example.composetodo.repository.ToDoListRepository
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-//class ToDoListViewModel @AssistedInject constructor(
-//    @Assisted val state: SavedStateHandle,
-//    application: Application,
-//    val repository: ToDoListRepository
-//
-//    ) : AndroidViewModel(application) {
 
 @HiltViewModel
 class MainViewModel @Inject constructor( application: Application,val repository: ToDoListRepository ) : ViewModel() {
+
     private val _electionFollowed = MutableLiveData<List<ToDoItem>>()
     val electionFollowed: LiveData<List<ToDoItem>> = _electionFollowed
 
 
+
+    //getting current index of list for detail screen
+
     var currentItemIndex by mutableStateOf<Int?>(null)
         private set
-
     fun setCurrentItemIndex(index:Int){
         currentItemIndex = index
+    }
+
+
+
+    //custom dialog popper
+    var isDialogShown by mutableStateOf(false)
+        private set
+
+    fun onPurchaseClick(){
+        isDialogShown = true
+    }
+
+    fun onDismissDialog(){
+        isDialogShown = false
+    }
+
+
+
+
+
+    fun getCurrentToDoItem(index: Int):ToDoItem?{
+        val currentToDoPicked=  _electionFollowed.value?.get(index = index)
+        return currentToDoPicked
+    }
+    fun setButtonStatus(status:List<ToDoItem>){
+        _electionFollowed.postValue(status)
     }
     init {
         Log.d("TAG", ": View model is working! ")
@@ -66,9 +85,7 @@ class MainViewModel @Inject constructor( application: Application,val repository
     }
 
 
-    fun setButtonStatus(status:List<ToDoItem>){
-        _electionFollowed.postValue(status)
-    }
+
 
 
 //    fun getAllList():List<ToDoItem>{
