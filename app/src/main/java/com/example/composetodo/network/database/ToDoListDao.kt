@@ -1,9 +1,6 @@
 package com.example.composetodo.network.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.composetodo.models.ToDoItem
 import kotlinx.coroutines.flow.Flow
 
@@ -12,7 +9,10 @@ import kotlinx.coroutines.flow.Flow
 interface ToDoListDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(todoitel:ToDoItem)
+    suspend fun insert(todoitem:ToDoItem)
+
+    @Delete
+    suspend fun delete(todoItem:ToDoItem)
 
 
     @Query("SELECT * FROM todolist_table")

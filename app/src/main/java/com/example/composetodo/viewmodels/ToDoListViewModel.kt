@@ -96,7 +96,15 @@ class MainViewModel @Inject constructor( application: Application,val repository
         }
 
     }
+    fun delete(item: ToDoItem) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                repository.dao.delete(item)
 
+            }
+        }
+
+    }
 
 //    fun getAllList():List<ToDoItem>{
 //        return dao.getAllToDoItemsList()

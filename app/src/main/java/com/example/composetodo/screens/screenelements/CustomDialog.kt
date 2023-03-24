@@ -111,6 +111,32 @@ fun CustomDialog(
                 ){
                     Button(
                         onClick = {
+                            if (currentToDoItem!=null) {
+                                mainViewModel.delete(currentToDoItem)
+                                onDismiss()
+                            }
+
+
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = Color.Red,
+                            contentColor = Color.White
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                        ,
+                        shape = CircleShape
+                    ) {
+                        Text(
+                            text = "Delete",
+                            style = MaterialTheme.typography.h6,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center,
+                        )
+                    }
+                    Button(
+                        onClick = {
                             onDismiss()
                         },
                         colors = ButtonDefaults.buttonColors(
