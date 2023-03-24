@@ -72,6 +72,8 @@ class MainViewModel @Inject constructor( application: Application,val repository
     }
 
 
+
+
     val currentToDoList = repository.getToDoListItemsFromDB().asLiveData()
 
     fun addToDoItem(item: ToDoItem){
@@ -84,8 +86,16 @@ class MainViewModel @Inject constructor( application: Application,val repository
 
     }
 
+    fun update(item: ToDoItem, boolean: Boolean) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                item.done = boolean
+                repository.dao.insert(item)
 
+            }
+        }
 
+    }
 
 
 //    fun getAllList():List<ToDoItem>{

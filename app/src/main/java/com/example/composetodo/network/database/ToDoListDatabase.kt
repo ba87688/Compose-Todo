@@ -15,8 +15,6 @@ abstract class ToDoListDatabase: RoomDatabase() {
     companion object{
         @Volatile
         private var INSTANCE:ToDoListDatabase?= null
-
-
         fun getDatabase(context: Context):ToDoListDatabase{
             val tempInstance = INSTANCE
             if (tempInstance!=null){

@@ -11,10 +11,12 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @Entity(tableName = "todolist_table")
 data class ToDoItem(
-    var topPriority: Boolean = false,
+//    var topPriority: Boolean = false,
+    var topPriority: String = "low",
     @PrimaryKey
     var name:String,
-    var description:String
+    var description:String,
+    var done:Boolean
 ):Parcelable{
     override fun toString(): String {
         return Uri.encode(Gson().toJson(this))

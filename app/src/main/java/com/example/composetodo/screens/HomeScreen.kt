@@ -32,7 +32,6 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     i: NavHostController,
     mainViewModel: MainViewModel
-
 ){
 //    val homeViewModel: ToDoListViewModel = viewModel(factory = factoryModel)
 
@@ -82,12 +81,12 @@ fun Scaf(i: NavHostController, mainViewModel: MainViewModel) {
 
 
 //                here is the work
-                if (mainViewModel.isDialogShown == false) {
-                    Log.d("GANG GANG", "Scaf: it is FLASEEEEEEEE")
-                    mainViewModel.onPurchaseClick()
-                }
+//                if (mainViewModel.isDialogShown == false) {
+//                    Log.d("GANG GANG", "Scaf: it is FLASEEEEEEEE")
+//                    mainViewModel.onPurchaseClick()
+//                }
 
-//                i.navigate(Screens.ToDoListAddScreen.route)
+                i.navigate(Screens.ToDoListAddScreen.route)
 
             }) {
                 Text(text = "+")
@@ -99,7 +98,7 @@ fun Scaf(i: NavHostController, mainViewModel: MainViewModel) {
             mainViewModel.currentToDoList.observe(lifecycleOwner, Observer { it ->
                 val data = it.data
                 if (data != null) {
-                    Log.d("TAG", "Scaf: LIVE DATA IS NOT NULL ${data.get(0).name}")
+//                    Log.d("TAG", "Scaf: LIVE DATA IS NOT NULL ${data.get(0).name}")
 
                     list.clear()
                     list.addAll(data)

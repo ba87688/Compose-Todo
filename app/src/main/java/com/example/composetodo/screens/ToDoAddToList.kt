@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.composetodo.models.ToDoItem
 import com.example.composetodo.navigation.Screens
 import com.example.composetodo.screens.screenelements.CustomDialog
@@ -74,6 +75,10 @@ fun ToDoAddToList(navController: NavHostController,
         Text(text = "priority...")
 
 
+        //add priority option shere.
+
+        var list = listOf("High", "Med", "Low")
+        RadioButtonSample(list)
 
 //        MyUI(radioOptions,selectedItem)
 
@@ -83,7 +88,7 @@ fun ToDoAddToList(navController: NavHostController,
                 val describeTask = descriptionText.text
 
 
-                val toDoItem = ToDoItem(false,name,describeTask)
+                val toDoItem = ToDoItem("low",name,describeTask,false)
                 mainViewModel.addToDoItem(toDoItem)
 
 
@@ -183,8 +188,42 @@ fun MyUI() {
 
 
 }
+@Composable
+fun RadioButtonSample(list:List<String>):String {
+    val radioOptions = list
+    val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[1] ) }
+    Row {
+        radioOptions.forEach { text ->
+            Row(
+                Modifier
+                    .selectable(
+                        selected = (text == selectedOption),
+                        onClick = {
+                            onOptionSelected(text)
+                        }
+                    )
+                    .padding(horizontal = 16.dp)
+            ) {
+                RadioButton(
+                    selected = (text == selectedOption),
+                    onClick = { onOptionSelected(text) }
+                )
+                Text(
+                    text = text,
+                    style = MaterialTheme.typography.body1.merge(),
+                    modifier = Modifier.padding(start = 16.dp, top = 9.dp)
+                )
+            }
+        }
+    }
+    return ""
+}
+
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
+
+
 
 }
