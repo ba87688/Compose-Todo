@@ -1,5 +1,6 @@
 package com.example.composetodo.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
@@ -26,15 +27,16 @@ import com.example.composetodo.screens.screenelements.CustomDialog
 import com.example.composetodo.viewmodels.MainViewModel
 
 @Composable
-fun ToDoAddToList(navController: NavHostController,
-                  mainViewModel: MainViewModel) {
+fun ToDoAddToList(
+    navController: NavHostController,
+    mainViewModel: MainViewModel
+) {
 
-    Column (
+    Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
-            ){
-
+    ) {
         val offset = Offset(5.0f, 10.0f)
 
         Text(
@@ -58,7 +60,7 @@ fun ToDoAddToList(navController: NavHostController,
             onValueChange = {
                 nameText = it
             },
-            label = { Text(text = "Label is...")}
+            label = { Text(text = "Label is...") }
         )
 
         var descriptionText by remember {
@@ -70,30 +72,37 @@ fun ToDoAddToList(navController: NavHostController,
             onValueChange = {
                 descriptionText = it
             },
-            label = { Text(text = "Label is...")}
+            label = { Text(text = "Label is...") }
         )
         Text(text = "priority...")
-
-
         //add priority option shere.
 
-        var list = listOf("High", "Med", "Low")
-        RadioButtonSample(list)
+        val list = listOf("High", "Med", "Low")
+//        val prio = RadioButtonSample(list)
 
+        val kinds = listOf("High", "Med", "Low")
+        val (selected, setSelected) = remember { mutableStateOf(list.last()) }
+        RadioButtonSample(list,selected,setSelected)
 //        MyUI(radioOptions,selectedItem)
+
+        val r = selected
+        Log.d("IT IS WHAT IT IS", "ITTTTTTTTTTTTTTTTT: $selected")
+
 
         Button(
             onClick = {
                 val name = nameText.text
                 val describeTask = descriptionText.text
+                val prio = selected
 
 
-                val toDoItem = ToDoItem("low",name,describeTask,false)
+                val toDoItem = ToDoItem(prio, name, describeTask, false)
                 mainViewModel.addToDoItem(toDoItem)
 
 
                 navController.navigate(Screens.HomeScreen.route)
-        }, modifier = Modifier.padding(8.dp)) {
+            }, modifier = Modifier.padding(8.dp)
+        ) {
             Row {
                 Icon(
                     imageVector = Icons.Default.Add,
@@ -106,124 +115,53 @@ fun ToDoAddToList(navController: NavHostController,
     }
 
 
-
-
-
-
-
 }
 
-@Composable
-fun TextFieldWithOutline(
-){
-    var text by remember {
-        mutableStateOf(TextFieldValue(""))
-    }
-    OutlinedTextField(
-        value = text,
-        modifier = Modifier.padding(bottom = 20.dp),
-        onValueChange = {
-            text = it
-        },
-        label = { Text(text = "Label is...")}
-    )
-
-
-
-
-
-
-
-}
 
 @Composable
-fun MyUI() {
-//
-    val radioOptions = listOf("High", "Medium", "Low")
+fun RadioButtonSample(
+    list: List<String>,
+    selected: String,
+    setSelected: (selected: String) -> Unit
 
-    val selectedItem by remember {
-        mutableStateOf(radioOptions[0])
-    }
-    Row(modifier = Modifier.selectableGroup()) {
-
-        radioOptions.forEach { label ->
-            Row(
-                modifier = Modifier
-                    .height(56.dp)
-//                    .selectable(
-//                        selected = (selectedItem == label)
-//                        onClick = { selectedItem = label },
-//                        role = androidx.compose.ui.semantics.Role.RadioButton
-//                    )
-                    .padding(horizontal = 16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                RadioButton(
-                    modifier = Modifier.padding(end = 16.dp),
-                    selected = (selectedItem == label),
-                    onClick = null // null recommended for accessibility with screen readers
-                )
-                var color:Color
-                when(label){
-                    "High" -> color = Color.Red
-                    "Medium" -> color = Color.Blue
-                    else -> color =Color.Green
-
-                }
-                Text(text = label, color = color)
-
-            }
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-}
-@Composable
-fun RadioButtonSample(list:List<String>):String {
+) {
     val radioOptions = list
-    val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[1] ) }
+
+    var textPri by remember { mutableStateOf("") }
+    val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[1]) }
     Row {
-        radioOptions.forEach { text ->
+        radioOptions.forEach { item ->
             Row(
                 Modifier
                     .selectable(
-                        selected = (text == selectedOption),
+                        selected = (item == selectedOption),
                         onClick = {
-                            onOptionSelected(text)
+                            onOptionSelected(item)
                         }
                     )
                     .padding(horizontal = 16.dp)
             ) {
                 RadioButton(
-                    selected = (text == selectedOption),
-                    onClick = { onOptionSelected(text) }
-                )
+                    selected = selected == item,
+                    onClick = {
+                        setSelected(item)
+                    },
+                    enabled = true
+                    )
                 Text(
-                    text = text,
+                    text = item,
                     style = MaterialTheme.typography.body1.merge(),
                     modifier = Modifier.padding(start = 16.dp, top = 9.dp)
                 )
             }
         }
     }
-    return ""
 }
 
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-
 
 
 }

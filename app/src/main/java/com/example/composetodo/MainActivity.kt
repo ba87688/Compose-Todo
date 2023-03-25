@@ -32,21 +32,15 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-
-
         setContent {
-
             ComposeToDoTheme {
                 val mainViewModel = hiltViewModel<MainViewModel>()
 
                 var i = rememberNavController()
                 Navigate(navController = i, mainViewModel)
-//                Navigate(navController = i,factoryModel)
             }
         }
     }
@@ -63,32 +57,3 @@ fun DefaultPreview() {
     ComposeToDoTheme {
     }
 }
-//
-//@Composable
-//fun RadioButtonSample() {
-//    val radioOptions = listOf("High", "Med", "Low")
-//    val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[1] ) }
-//    Row {
-//        radioOptions.forEach { text ->
-//            Row(
-//                Modifier.selectable(
-//                        selected = (text == selectedOption),
-//                        onClick = {
-//                            onOptionSelected(text)
-//                        }
-//                    )
-//                    .padding(horizontal = 16.dp)
-//            ) {
-//                RadioButton(
-//                    selected = (text == selectedOption),
-//                    onClick = { onOptionSelected(text) }
-//                )
-//                Text(
-//                    text = text,
-//                    style = MaterialTheme.typography.body1.merge(),
-//                    modifier = Modifier.padding(start = 16.dp, top = 9.dp)
-//                )
-//            }
-//        }
-//    }
-//}

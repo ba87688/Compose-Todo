@@ -40,6 +40,14 @@ fun ToDoCard(
 
         itemsIndexed(list) { index, item ->
 
+            val cardColor = when (item.topPriority) {
+                    "low" -> Color.Green
+                    "Med" -> Color.Yellow
+                    else -> Color.Red
+                }
+
+
+
             Card(
 
                 modifier = Modifier
@@ -72,7 +80,7 @@ fun ToDoCard(
                             .padding(start = 10.dp, end = 10.dp)
                             .size(24.dp)
                             .clip(CircleShape)
-                            .background(Color.Red)
+                            .background(cardColor)
                     )
                     Text(modifier= Modifier.weight(2f),
                         text = item.name)
