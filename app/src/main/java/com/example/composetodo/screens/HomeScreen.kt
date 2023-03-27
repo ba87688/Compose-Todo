@@ -28,6 +28,7 @@ import com.example.composetodo.viewmodels.MainViewModel
 //import com.example.composetodo.viewmodels.ToDoListViewModel
 import kotlinx.coroutines.launch
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
     i: NavHostController,
@@ -35,15 +36,6 @@ fun HomeScreen(
 ){
 //    val homeViewModel: ToDoListViewModel = viewModel(factory = factoryModel)
 
-
-    Log.d("TAG", "HomeScreen: SHIT ")
-
-    Scaf(i,mainViewModel)
-}
-
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@Composable
-fun Scaf(i: NavHostController, mainViewModel: MainViewModel) {
     val navController = rememberNavController()
     val r = LocalContext.current
     val composableScope = rememberCoroutineScope()
@@ -65,27 +57,6 @@ fun Scaf(i: NavHostController, mainViewModel: MainViewModel) {
         floatingActionButton = {
             FloatingActionButton(onClick = {
 
-
-                Log.i("TAG", "Scaf: coming soon!")
-
-
-//
-//            var db = ToDoListDatabase.getDatabase(r)
-//            var dao = db.toDoListDao()
-//            composableScope.launch {
-//                dao.insert(ToDoItem(false,"Kevin","Sorbo"))
-//
-//                Log.d("INSIDE", "Scaf: success? ")
-//            }
-
-
-
-//                here is the work
-//                if (mainViewModel.isDialogShown == false) {
-//                    Log.d("GANG GANG", "Scaf: it is FLASEEEEEEEE")
-//                    mainViewModel.onPurchaseClick()
-//                }
-
                 i.navigate(Screens.ToDoListAddScreen.route)
 
             }) {
@@ -98,8 +69,6 @@ fun Scaf(i: NavHostController, mainViewModel: MainViewModel) {
             mainViewModel.currentToDoList.observe(lifecycleOwner, Observer { it ->
                 val data = it.data
                 if (data != null) {
-//                    Log.d("TAG", "Scaf: LIVE DATA IS NOT NULL ${data.get(0).name}")
-
                     list.clear()
                     list.addAll(data)
                     showWebView = true
@@ -112,7 +81,7 @@ fun Scaf(i: NavHostController, mainViewModel: MainViewModel) {
                 }
             })
 
-            val lifecycleOwner = LocalLifecycleOwner.current
+//            val lifecycleOwner = LocalLifecycleOwner.current
             if (showWebView) {
                 ToDoCard(list = list, i, mainViewModel)
 

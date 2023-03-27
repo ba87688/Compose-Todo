@@ -60,7 +60,7 @@ fun ToDoAddToList(
             onValueChange = {
                 nameText = it
             },
-            label = { Text(text = "Label is...") }
+            label = { Text(text = "Title is...") }
         )
 
         var descriptionText by remember {
@@ -72,22 +72,17 @@ fun ToDoAddToList(
             onValueChange = {
                 descriptionText = it
             },
-            label = { Text(text = "Label is...") }
+            label = { Text(text = "Detail of task...") }
         )
-        Text(text = "priority...")
+        Text(text = "select priority...")
         //add priority option shere.
 
         val list = listOf("High", "Med", "Low")
 //        val prio = RadioButtonSample(list)
 
-        val kinds = listOf("High", "Med", "Low")
         val (selected, setSelected) = remember { mutableStateOf(list.last()) }
-        RadioButtonSample(list,selected,setSelected)
+        RadioButtonSample(list, selected, setSelected)
 //        MyUI(radioOptions,selectedItem)
-
-        val r = selected
-        Log.d("IT IS WHAT IT IS", "ITTTTTTTTTTTTTTTTT: $selected")
-
 
         Button(
             onClick = {
@@ -109,7 +104,7 @@ fun ToDoAddToList(
                     contentDescription = null,
                     modifier = Modifier.padding(end = 4.dp)
                 )
-                Text(text = " Add")
+                Text(text = " Add Task")
             }
         }
     }
@@ -147,7 +142,7 @@ fun RadioButtonSample(
                         setSelected(item)
                     },
                     enabled = true
-                    )
+                )
                 Text(
                     text = item,
                     style = MaterialTheme.typography.body1.merge(),
