@@ -40,7 +40,7 @@ fun ToDoAddToList(
         val offset = Offset(5.0f, 10.0f)
 
         Text(
-            text = "nameOf",
+            text = "Adding a task:",
             style = TextStyle(
                 color = Color.DarkGray,
                 fontSize = 24.sp,
@@ -60,7 +60,7 @@ fun ToDoAddToList(
             onValueChange = {
                 nameText = it
             },
-            label = { Text(text = "Title is...") }
+            label = { Text(text = "Task title is...") }
         )
 
         var descriptionText by remember {

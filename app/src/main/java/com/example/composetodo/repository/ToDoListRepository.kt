@@ -1,5 +1,6 @@
 package com.example.composetodo.repository
 
+import com.example.composetodo.models.ToDoItem
 import com.example.composetodo.network.database.ToDoListDao
 import com.example.politicalpreparedness.network.database.networkBoundResource
 import kotlinx.coroutines.Dispatchers
@@ -26,6 +27,16 @@ class ToDoListRepository @Inject constructor(
         }
 
     )
+
+
+    suspend fun insert(item: ToDoItem){
+        dao.insert(item)
+    }
+    suspend fun delete(item: ToDoItem){
+        withContext(Dispatchers.IO){
+            dao.delete(item)
+        }
+    }
 
 
 

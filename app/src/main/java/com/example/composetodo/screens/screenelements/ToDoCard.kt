@@ -39,14 +39,11 @@ fun ToDoCard(
     LazyColumn() {
 
         itemsIndexed(list) { index, item ->
-
             val cardColor = when (item.topPriority) {
                     "low" -> Color.Green
                     "Med" -> Color.Yellow
                     else -> Color.Red
-                }
-
-
+            }
 
             Card(
 
@@ -54,17 +51,10 @@ fun ToDoCard(
                     .fillMaxWidth()
                     .padding(10.dp)
                     .clickable {
-                        Log.d("TAGNEVER", "ToDoCard: $index")
                         mainViewModel.setCurrentItemIndex(index)
                         if (mainViewModel.isDialogShown == false) {
-                            Log.d("GANG GANG", "Scaf: it is FLASEEEEEEEE")
                             mainViewModel.onPurchaseClick()
                         }
-//                        nav.currentBackStackEntry?.savedStateHandle?.set(
-//                            key = "todoitem",
-//                            value = item
-//                        )
-//                        nav.navigate(Screens.ToDoListDetail.route)
 
 
                     },
@@ -93,7 +83,8 @@ fun ToDoCard(
                         fontSize = 13.sp
                     )
                     Row(
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
                             .weight(1f),
                         horizontalArrangement = Arrangement.End
 
@@ -106,15 +97,13 @@ fun ToDoCard(
                             checked = checked,
                             onCheckedChange = { checked_ ->
                                 checked = checked_
-
-                                Log.d("GGGGGGGGGGGG", "ToDoCard: $checked")
                                 if (checked) {
                                     mainViewModel.update(item, true)
+
                                 } else {
                                     mainViewModel.update(item, false)
 
                                 }
-                                Log.d("GGGGGGGGGGGG3", "ToDoCard: ${item.done}")
 
                             }
                         )
@@ -126,60 +115,7 @@ fun ToDoCard(
                 }
             }
         }
-//        items(list) { item ->
-//
-//
-//            Card(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(10.dp)
-//                    .clickable {
-//
-//                        nav.currentBackStackEntry?.savedStateHandle?.set(
-//                            key = "todoitem",
-//                            value = item
-//                        )
-//                        nav.navigate(Screens.ToDoListDetail.route)
-//
-//
-//                    },
-//                elevation = 20.dp
-//            ) {
-//                Row(
-//                    verticalAlignment = Alignment.CenterVertically
-//                ) {
-//                    Row(
-//                        horizontalArrangement = Arrangement.Center
-//                    ) {
-//                        Box(
-//                            modifier = Modifier
-//                                .padding(start = 10.dp, end = 10.dp)
-//                                .size(24.dp)
-//                                .clip(CircleShape)
-//                                .background(Color.Red)
-//                        )
-//                        Text(text = item.name)
-//                        Text(text = item.description)
-//                    }
-//
-//
-//                    Row(
-//                        modifier = Modifier.fillMaxWidth(),
-//                        horizontalArrangement = Arrangement.End
-//                    ) {
-//
-//
-//                        Checkbox(
-//                            checked = true,
-//                            onCheckedChange = { }
-//                        )
-//
-//                    }
-//
-//                }
-//            }
-//
-//        }
+
     }
 }
 

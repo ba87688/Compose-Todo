@@ -47,8 +47,6 @@ class MainViewModel @Inject constructor( application: Application,val repository
 
 
 
-
-
     fun getCurrentToDoItem(index: Int):ToDoItem?{
         val currentToDoPicked=  _electionFollowed.value?.get(index = index)
         return currentToDoPicked
@@ -57,57 +55,38 @@ class MainViewModel @Inject constructor( application: Application,val repository
         _electionFollowed.postValue(status)
     }
     init {
-        Log.d("TAG", ": View model is working! ")
 
 
-
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-//                var l = dao.getAllToDoItemsList()
-//                var l = rep.getToDoListItemsFromDB().asLiveData()
-                Log.d("TAG", "onCreate: HOMMMMM ")
-
-            }
-        }
     }
-
-
 
 
     val currentToDoList = repository.getToDoListItemsFromDB().asLiveData()
 
     fun addToDoItem(item: ToDoItem){
         viewModelScope.launch {
-            withContext(Dispatchers.IO){
-                repository.dao.insert(item)
-
-            }
+                repository.insert(item)
         }
 
     }
 
     fun update(item: ToDoItem, boolean: Boolean) {
         viewModelScope.launch {
-            withContext(Dispatchers.IO){
                 item.done = boolean
-                repository.dao.insert(item)
-
-            }
+                repository.insert(item)
         }
 
     }
     fun delete(item: ToDoItem) {
         viewModelScope.launch {
-            withContext(Dispatchers.IO){
-                repository.dao.delete(item)
-
-            }
+            repository.delete(item)
         }
-
+    }
+    fun delete(item: ToDoItem,list: List<ToDoItem>) {
+        viewModelScope.launch {
+            repository.delete(item)
+            setButtonStatus(list)
+        }
     }
 
-//    fun getAllList():List<ToDoItem>{
-//        return dao.getAllToDoItemsList()
-//    }
 
 }

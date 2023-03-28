@@ -3,6 +3,10 @@ package com.example.composetodo.screens
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -11,6 +15,7 @@ import androidx.compose.runtime.setValue
 
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -33,21 +38,20 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     i: NavHostController,
     mainViewModel: MainViewModel
-){
-//    val homeViewModel: ToDoListViewModel = viewModel(factory = factoryModel)
-
+) {
     val navController = rememberNavController()
     val r = LocalContext.current
     val composableScope = rememberCoroutineScope()
     val lifecycleOwner = LocalLifecycleOwner.current
 
     //CURRENT elections
-    var list = mutableListOf<ToDoItem>()
+    var list = remember {
+            mutableListOf<ToDoItem>()
+        }
 
 
     var showWebView by remember { mutableStateOf(false) }
 //    var isDialogShown by remember { mutableStateOf(mainViewModel.getDialogShown()) }
-
 
 
     Scaffold(
@@ -66,15 +70,18 @@ fun HomeScreen(
         drawerContent = { Text(text = "drawerContent") },
         content = {
 
-            mainViewModel.currentToDoList.observe(lifecycleOwner, Observer { it ->
+            mainViewModel.currentToDoList.observe(
+                lifecycleOwner, Observer { it ->
                 val data = it.data
+
                 if (data != null) {
-                    list.clear()
-                    list.addAll(data)
-                    showWebView = true
+                    if (!data.isEmpty()) {
+                        list.clear()
+                        list.addAll(data)
+                        showWebView = true
 
-
-                    mainViewModel.setButtonStatus(list)
+                        mainViewModel.setButtonStatus(list)
+                    }
                 } else {
                     Log.d("TAG", "Scaf: LIVE DATA IS  NULL")
 
@@ -83,17 +90,26 @@ fun HomeScreen(
 
 //            val lifecycleOwner = LocalLifecycleOwner.current
             if (showWebView) {
-                ToDoCard(list = list, i, mainViewModel)
+                ToDoCard(list = list, i, mainViewModel = mainViewModel)
 
+            } else {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "Your List is Empty!",
+                        style = MaterialTheme.typography.h5
+                    )
+                }
             }
 
         },
 
         )
 
-
-
-    if(mainViewModel.isDialogShown){
+    if (mainViewModel.isDialogShown) {
         CustomDialog(
             onDismiss = {
                 mainViewModel.onDismissDialog()
@@ -104,6 +120,4 @@ fun HomeScreen(
             mainViewModel
         )
     }
-
-
 }

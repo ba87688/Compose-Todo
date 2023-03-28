@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role.Companion.Image
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -74,22 +75,34 @@ fun CustomDialog(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ){
-                        Text(name!!)
+                        Text(name!!,
+                            style = MaterialTheme.typography.h4
+                        )
 //                        Text("799,00$")
                     }
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ){
-                        Text(descrptn!!)
+                        Text(descrptn!!,
+                            style = MaterialTheme.typography.h6
+                        )
 //                        Text("32,00$")
                     }
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ){
-                        Text("".plus(prioty!!))
-//                        Text("32,00$")
+                        Text("".plus(prioty!!),
+                            style = TextStyle(
+                                color = when(prioty) {
+                                    "High" -> Color.Red
+                                    "Med" -> Color.Yellow
+                                    else -> Color.Green
+                                }
+                            )
+
+                        )
                     }
                     Divider()
 
